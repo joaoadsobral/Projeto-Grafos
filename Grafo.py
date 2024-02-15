@@ -1,15 +1,15 @@
 import openpyxl
+from geopy.distance import geodesic
 
 # Caminho para o arquivo Excel no repositório clonado
-excel_file_path = "Bairros Recifes (2).xlsx"
+excel_file_path = "nota.xlsx"
 
 # Carregar o arquivo Excel usando openpyxl
 workbook = openpyxl.load_workbook(excel_file_path)
 sheet = workbook.active
 
 
-
-class Grafo():
+class Grafo:
     def __init__(self):
         self.grafo = {}
 
@@ -57,7 +57,7 @@ class Grafo():
         # Imprime o menor caminho e os vértices visitados
         print(f"O menor caminho entre {src} e {dest} é:")
         self.imprime_caminho(pred, src, dest)
-        print(f"Com peso total: {dist[dest]}")
+        print(f"Com peso total: {dist[dest]:.3f} km")
 
 
 if __name__ == "__main__":
@@ -69,27 +69,40 @@ if __name__ == "__main__":
         coordenadas1 = celula.value.split(", ")
         X1 = float(coordenadas1[0])
         Y1 = float(coordenadas1[1])
+        coord_inicial = (X1, Y1)
         celula = sheet.cell(row=(d + 2), column=2)
         limitrofes = celula.value.split(", ")
         for limitrofe in limitrofes:
             linha = None
             for row in sheet.iter_rows(min_row=1, max_row=sheet.max_row, min_col=1, max_col=1):
                 for cell in row:
+                    if limitrofe == 'Brejo do Beberibe\n\n':
+                        linha = 20
+                    if limitrofe == 'Ponto de Parada\n':
+                        linha = 74
+                    if limitrofe == 'Torrões':
+                        linha = 91
+                    if limitrofe == 'Engenho do Meio':
+                        linha = 40
+                    if limitrofe == 'Parnamirim\n':
+                        linha = 68
+                    if limitrofe == 'Brejo da Guabiraba':
+                        linha = 19
+                    if limitrofe == 'Macaxeira\n':
+                        linha = 59
                     if cell.value == limitrofe:
                         linha = cell.row
                         break
-            if linha is None:
-                print(f"A linha para {limitrofe} não foi encontrada na planilha.")
-                continue  # Continue para o próximo limitrofe
             celula = sheet.cell(row=linha, column=3)
             coordenadas2 = celula.value.split(", ")
             X2 = float(coordenadas2[0])
             Y2 = float(coordenadas2[1])
-            peso = (((X1 - X2) * 2) + ((Y1 - Y2) * 2)) ** (1 / 2)
+            coord_final = (X2, Y2)
+            peso = geodesic(coord_inicial, coord_final).kilometers
             g.adiciona_aresta(bairro1, limitrofe, peso)
 
-    src = 'Alto do Mandu'  # Vértice inicial
-    dest = 'Arruda'  # Vértice final
+    src = 'Recife'  # Vértice inicial
+    dest = 'Cidade Universitária'  # Vértice final
     workbook.close()
 
     g.bellman_ford(src, dest)
