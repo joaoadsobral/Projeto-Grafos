@@ -1,5 +1,7 @@
 import openpyxl
 from geopy.distance import geodesic
+import matplotlib.pyplot as plt
+import networkx as nx
 
 # Caminho para o arquivo Excel no repositório clonado
 excel_file_path = "Pasta10.xlsx"
@@ -31,15 +33,6 @@ class Grafo:
         caminho.reverse()
         print("Caminho:", " -> ".join(caminho))
 
-        print("Pesos das arestas:")
-        for i in range(len(caminho) - 1):
-            u = caminho[i]
-            v = caminho[i + 1]
-            for neighbor, weight in self.grafo[u]:
-                if neighbor == v:
-                    print(f" {u} -> {v}: {weight:.2f} km")
-                    break
-
     # O algoritmo de Bellman-Ford
     def bellman_ford(self, src, dest):
         # Inicializa as distâncias do vértice inicial como infinito
@@ -59,10 +52,29 @@ class Grafo:
         self.imprime_caminho(pred, src, dest)
         print(f"peso total: {dist[dest]:.2f} km")
 
+    # Método para visualizar o grafo
+    def visualizar_grafo(self, vertices, arestas):
+        G = nx.DiGraph()
+
+        for vertice in vertices:
+            G.add_node(vertice)
+
+        for aresta in arestas:
+            G.add_edge(aresta[0], aresta[1])
+
+        pos = nx.spring_layout(G)
+        nx.draw(G, pos, with_labels=True, node_size=650, node_color="yellow", font_size=5, font_weight="bold",
+                width=1, edge_color="gray", arrows=True)
+
+        plt.title("Grafo")
+        plt.show()
+
 
 # Exemplo de uso:
 if __name__ == "__main__":
     g = Grafo()
+    arestas = []
+
     for d in range(94):
         celula = sheet.cell(row=(d + 2), column=1)
         bairro1 = celula.value
@@ -86,9 +98,13 @@ if __name__ == "__main__":
             Y2 = float(coordenadas2[1])
             coord_final = (X2, Y2)
             peso = geodesic(coord_inicial, coord_final).kilometers
+            arestas.append((bairro1, limitrofe, peso))
             g.adiciona_aresta(bairro1, limitrofe, peso)
 
-    src = 'Espinheiro'  # Vértice inicial
-    dest = 'Recife'  # Vértice final
+    src = 'Brasília Teimosa'  # Vértice inicial
+    dest = 'Pina'  # Vértice final
 
     g.bellman_ford(src, dest)
+
+    # Visualizar o grafo
+    g.visualizar_grafo(list(g.grafo.keys()), arestas)
