@@ -2,7 +2,7 @@ import openpyxl
 from geopy.distance import geodesic
 
 # Caminho para o arquivo Excel no repositório clonado
-excel_file_path = "nota.xlsx"
+excel_file_path = "Pasta10.xlsx"
 
 # Carregar o arquivo Excel usando openpyxl
 workbook = openpyxl.load_workbook(excel_file_path)
@@ -21,7 +21,6 @@ class Grafo:
         if v not in self.grafo:
             self.grafo[v] = []
 
-    # Função para imprimir o caminho percorrido
     def imprime_caminho(self, pred, src, dest):
         caminho = []
         vertice = dest
@@ -30,7 +29,16 @@ class Grafo:
             vertice = pred[vertice]
         caminho.append(src)
         caminho.reverse()
-        print(" -> ".join(caminho))
+        print("Caminho:", " -> ".join(caminho))
+
+        print("Pesos das arestas:")
+        for i in range(len(caminho) - 1):
+            u = caminho[i]
+            v = caminho[i + 1]
+            for neighbor, weight in self.grafo[u]:
+                if neighbor == v:
+                    print(f" {u} -> {v}: {weight:.3f} km")
+                    break
 
     # O algoritmo de Bellman-Ford
     def bellman_ford(self, src, dest):
@@ -54,12 +62,12 @@ class Grafo:
                     print("O grafo contém ciclo de peso negativo")
                     return
 
-        # Imprime o menor caminho e os vértices visitados
         print(f"O menor caminho entre {src} e {dest} é:")
         self.imprime_caminho(pred, src, dest)
-        print(f"Com peso total: {dist[dest]:.3f} km")
+        print(f"peso total: {dist[dest]:.3f} km")
 
 
+# Exemplo de uso:
 if __name__ == "__main__":
     g = Grafo()
     for d in range(94):
@@ -76,20 +84,6 @@ if __name__ == "__main__":
             linha = None
             for row in sheet.iter_rows(min_row=1, max_row=sheet.max_row, min_col=1, max_col=1):
                 for cell in row:
-                    if limitrofe == 'Brejo do Beberibe\n\n':
-                        linha = 20
-                    if limitrofe == 'Ponto de Parada\n':
-                        linha = 74
-                    if limitrofe == 'Torrões':
-                        linha = 91
-                    if limitrofe == 'Engenho do Meio':
-                        linha = 40
-                    if limitrofe == 'Parnamirim\n':
-                        linha = 68
-                    if limitrofe == 'Brejo da Guabiraba':
-                        linha = 19
-                    if limitrofe == 'Macaxeira\n':
-                        linha = 59
                     if cell.value == limitrofe:
                         linha = cell.row
                         break
@@ -101,8 +95,7 @@ if __name__ == "__main__":
             peso = geodesic(coord_inicial, coord_final).kilometers
             g.adiciona_aresta(bairro1, limitrofe, peso)
 
-    src = 'Recife'  # Vértice inicial
-    dest = 'Cidade Universitária'  # Vértice final
-    workbook.close()
+    src = 'Caxangá'  # Vértice inicial
+    dest = 'Arruda'  # Vértice final
 
     g.bellman_ford(src, dest)
