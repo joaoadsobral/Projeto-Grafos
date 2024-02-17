@@ -37,7 +37,7 @@ class Grafo:
             v = caminho[i + 1]
             for neighbor, weight in self.grafo[u]:
                 if neighbor == v:
-                    print(f" {u} -> {v}: {weight:.3f} km")
+                    print(f" {u} -> {v}: {weight:.2f} km")
                     break
 
     # O algoritmo de Bellman-Ford
@@ -55,16 +55,9 @@ class Grafo:
                         dist[v] = dist[u] + w
                         pred[v] = u
 
-        # Checa se há ciclo de peso negativo
-        for u in self.grafo:
-            for v, w in self.grafo[u]:
-                if dist[u] != float("Inf") and dist[u] + w < dist[v]:
-                    print("O grafo contém ciclo de peso negativo")
-                    return
-
         print(f"O menor caminho entre {src} e {dest} é:")
         self.imprime_caminho(pred, src, dest)
-        print(f"peso total: {dist[dest]:.3f} km")
+        print(f"peso total: {dist[dest]:.2f} km")
 
 
 # Exemplo de uso:
@@ -95,7 +88,7 @@ if __name__ == "__main__":
             peso = geodesic(coord_inicial, coord_final).kilometers
             g.adiciona_aresta(bairro1, limitrofe, peso)
 
-    src = 'Caxangá'  # Vértice inicial
-    dest = 'Arruda'  # Vértice final
+    src = 'Espinheiro'  # Vértice inicial
+    dest = 'Recife'  # Vértice final
 
     g.bellman_ford(src, dest)
