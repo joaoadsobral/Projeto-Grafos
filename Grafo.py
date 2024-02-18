@@ -33,6 +33,16 @@ class Grafo:
         caminho.reverse()
         print("Caminho:", " -> ".join(caminho))
 
+        print("Pesos das arestas:")
+        for i in range(len(caminho) - 1):
+            u = caminho[i]
+            v = caminho[i + 1]
+            for neighbor, weight in self.grafo[u]:
+                if neighbor == v:
+                    print(f" {u} -> {v}: {weight:.3f} km")
+                    break
+
+
     # O algoritmo de Bellman-Ford
     def bellman_ford(self, src, dest):
         # Inicializa as distâncias do vértice inicial como infinito
@@ -52,6 +62,8 @@ class Grafo:
         self.imprime_caminho(pred, src, dest)
         print(f"peso total: {dist[dest]:.2f} km")
 
+        return pred, dist
+
     # Método para visualizar o grafo
     def visualizar_grafo(self, vertices, arestas):
         G = nx.DiGraph()
@@ -59,11 +71,11 @@ class Grafo:
         for vertice in vertices:
             G.add_node(vertice)
 
-        for aresta in arestas:
-            G.add_edge(aresta[0], aresta[1])
+        for u, v, w in arestas:
+            G.add_edge(u, v, weight=w)
 
         pos = nx.spring_layout(G)
-        nx.draw(G, pos, with_labels=True, node_size=650, node_color="yellow", font_size=5, font_weight="bold",
+        nx.draw(G, pos, with_labels=True, node_size=650, node_color="yellow", font_size=7, font_weight="bold",
                 width=1, edge_color="gray", arrows=True)
 
         plt.title("Grafo")
@@ -101,10 +113,10 @@ if __name__ == "__main__":
             arestas.append((bairro1, limitrofe, peso))
             g.adiciona_aresta(bairro1, limitrofe, peso)
 
-    src = 'Brasília Teimosa'  # Vértice inicial
-    dest = 'Pina'  # Vértice final
+    src = 'Santo Amaro'  # Vértice inicial
+    dest = 'Recife'  # Vértice final
 
-    g.bellman_ford(src, dest)
+    pred, dist = g.bellman_ford(src, dest)
 
     # Visualizar o grafo
     g.visualizar_grafo(list(g.grafo.keys()), arestas)
