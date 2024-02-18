@@ -65,6 +65,13 @@ class Grafo:
                         dist[v] = dist[u] + w
                         pred[v] = u
 
+        # Checa se há ciclo de peso negativo
+        for u in self.grafo:
+            for v, w in self.grafo[u]:
+                if dist[u] != float("Inf") and dist[u] + w < dist[v]:
+                    print("O grafo contém ciclo de peso negativo")
+                    return
+
         output_text.set(f"O menor caminho entre {src} e {dest} é:")
         self.imprime_caminho(pred, src, dest)
 
