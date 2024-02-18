@@ -98,7 +98,11 @@ class Grafo:
 def calcular_caminho():
     src = entry_src.get()
     dest = entry_dest.get()
-    pred, dist = grafo.bellman_ford(src, dest)
+    if src not in grafo.grafo or dest not in grafo.grafo:
+        output_text.set("Erro: Origem ou destino inválido. Por favor, escolha a origem e o destino Baseado nos bairros da planilha de Excel, cuidado com a Ortografia!\n")
+    else:
+        pred, dist = grafo.bellman_ford(src, dest)
+
 
 
 # Função para lidar com o fechamento da janela
