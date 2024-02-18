@@ -34,18 +34,18 @@ class Grafo:
         caminho.reverse()
         output_text.set("Caminho: " + " -> ".join(caminho))
 
-        output_text.set(output_text.get() + "\n" + "Pesos das arestas:")
+        output_text.set(output_text.get() + "\n\nPeso das arestas:\n")
         total_weight = 0
         for i in range(len(caminho) - 1):
             u = caminho[i]
             v = caminho[i + 1]
             for neighbor, weight in self.grafo[u]:
                 if neighbor == v:
-                    output_text.set(output_text.get() + f"\n {u} -> {v}: {weight:.2f} km")
+                    output_text.set(output_text.get() + f"\n{u} -> {v}: {weight:.2f} km")
                     total_weight += weight
                     break
 
-        output_text.set(output_text.get() + f"\nPeso total: {total_weight:.2f} km")
+        output_text.set(output_text.get() + f"\n\nPeso total: {total_weight:.2f} km")
 
         # Visualizar o grafo
         self.visualizar_grafo(list(self.grafo.keys()), arestas, src, dest)
@@ -129,7 +129,7 @@ button_calcular = tk.Button(frame, text="Calcular Caminho", command=calcular_cam
 button_calcular.grid(row=2, columnspan=2, padx=5, pady=5)
 
 output_text = tk.StringVar()
-output_label = tk.Label(frame, textvariable=output_text, justify="left")
+output_label = tk.Label(frame, textvariable=output_text, justify="left", font=("Helvetica", 12))
 output_label.grid(row=3, columnspan=2, padx=5, pady=5, sticky="w")
 
 # Tratamento de evento para o fechamento da janela
