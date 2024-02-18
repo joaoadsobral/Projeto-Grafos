@@ -23,16 +23,9 @@ Considerando a vasta quantidade de bairros em Recife, propusemos a construção 
   - `tkinter`: Para criar a interface gráfica.
 
 ### Conclusão
-Após clonar o repositório e instalar as bibliotecas necessárias, basta executar o programa e dará de cara com essa tela : 
+Após clonar o repositório e instalar as bibliotecas necessárias, basta executar o programa e dará de cara com uma tela pedindo pra inserir uma origem e um destino. Onde você deverá preencher com 2 Bairros de Recife Onde terá como resultado o menor caminho entre esses 2 pontos demonstrado, além da distância entre cada um desses bairros vizinhos e a quilometragem final. Além disso, gera um Grafo que demonstra por completo os vértices e suas distâncias por meio das arestas, e além disso, e em vermelho, destaca o caminho citado na interface gráfica, para encerrar o programa, deve apenas fechar as 2 abas. Se você enviar dois caminhos seguidos, sem fechar a aba do grafo, acabará gerando o grafo com 2 caminhos destacados. Não aperte calcular caminho 2 vezes para mesma rota, pois sobrecarregará o programa e acabará duplicando o grafo.
 
-Onde você deverá preencher com 2 Bairros de Recife, como por exemplo Arruda e Cidade Universitária :
-
-Onde terá como resultado o menor caminho entre esses 2 pontos demonstrado, além da distância entre cada um desses bairros vizinhos, além disso :
-
-Um Grafo que demonstra por completo os vértices e suas distâncias por meio das arestas, e além disso, em vermelho destacado o caminho citado na interface gráfica, para encerrar o programa, deve apenas fechar as 2 abas. Se você enviar dois caminhos seguidos, sem fechar a aba do grafo, acabará gerando o grafo com 2 caminhos destacados. Não aperte calcular caminho 2 vezes para mesma rota, pois sobrecarregará o programa e acabará duplicando o grafo.
-xxx
-Porém, caso você digite alguma origem ou destino incorreto (verificar lista de bairros na planilha do excel), dará de cara com essa tela :
-
+Porém, caso você digite alguma origem ou destino incorreto (verificar lista de bairros na planilha do excel), dará de cara com ua tela de erro pedindo pra inserir novamente
 Após isso, você pode tentar novamente para gerar um resultado possível.
 
 
