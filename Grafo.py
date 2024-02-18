@@ -39,7 +39,7 @@ class Grafo:
             v = caminho[i + 1]
             for neighbor, weight in self.grafo[u]:
                 if neighbor == v:
-                    print(f" {u} -> {v}: {weight:.3f} km")
+                    print(f" {u} -> {v}: {weight:.2f} km")
                     break
 
 
@@ -65,7 +65,7 @@ class Grafo:
         return pred, dist
 
     # Método para visualizar o grafo
-    def visualizar_grafo(self, vertices, arestas):
+    def visualizar_grafo(self, vertices, arestas, src, dest):
         G = nx.DiGraph()
 
         for vertice in vertices:
@@ -77,6 +77,13 @@ class Grafo:
         pos = nx.spring_layout(G)
         nx.draw(G, pos, with_labels=True, node_size=650, node_color="yellow", font_size=7, font_weight="bold",
                 width=1, edge_color="gray", arrows=True)
+
+        # Destaca o caminho entre src e dest em vermelho
+        if src and dest:
+            shortest_path_nodes = nx.bellman_ford_path(G, source=src, target=dest, weight='weight')
+            highlighted_edges = [(shortest_path_nodes[i], shortest_path_nodes[i + 1]) for i in
+                                 range(len(shortest_path_nodes) - 1)]
+            nx.draw_networkx_edges(G, pos, edgelist=highlighted_edges, edge_color='red', width=2.0)
 
         plt.title("Grafo")
         plt.show()
@@ -114,9 +121,9 @@ if __name__ == "__main__":
             g.adiciona_aresta(bairro1, limitrofe, peso)
 
     src = 'Santo Amaro'  # Vértice inicial
-    dest = 'Recife'  # Vértice final
+    dest = 'Cajueiro'  # Vértice final
 
     pred, dist = g.bellman_ford(src, dest)
 
     # Visualizar o grafo
-    g.visualizar_grafo(list(g.grafo.keys()), arestas)
+    g.visualizar_grafo(list(g.grafo.keys()), arestas, src, dest)
