@@ -22,10 +22,34 @@ Considerando a vasta quantidade de bairros em Recife, propusemos a construção 
   - `matplotlib.pyplot` e `networkx`: Para gerar o visualizador de grafos e destacar o caminho entre os dois vértices.
   - `tkinter`: Para criar a interface gráfica.
 
+## 📦 Como Rodar o Projeto
+
+### Pré-requisitos
+
+- Python 3.10+
+- Recomenda-se uso de ambiente virtual
+
+### Passos
+
+```bash
+# Clone o repositório
+git clone https://github.com/seu-usuario/seu-projeto.git
+cd seu-projeto
+
+# Crie e ative o ambiente virtual
+python3 -m venv .venv
+source .venv/bin/activate  # Linux/macOS
+# .venv\Scripts\activate   # Windows
+
+# Instale as dependências
+pip install openpyxl geopy matplotlib networkx
+
+# Rode o projeto
+python main.py
+```
+
 ### Conclusão
 Após clonar o repositório e instalar as bibliotecas necessárias, basta executar o programa e dará de cara com uma tela pedindo pra inserir uma origem e um destino. Onde você deverá preencher com 2 Bairros de Recife Onde terá como resultado o menor caminho entre esses 2 pontos demonstrado, além da distância entre cada um desses bairros vizinhos e a quilometragem final. Além disso, gera um Grafo que demonstra por completo os vértices e suas distâncias por meio das arestas, e além disso, e em vermelho, destaca o caminho citado na interface gráfica, para encerrar o programa, deve apenas fechar as 2 abas. Se você enviar dois caminhos seguidos, sem fechar a aba do grafo, acabará gerando o grafo com 2 caminhos destacados. Não aperte calcular caminho 2 vezes para mesma rota, pois sobrecarregará o programa e acabará duplicando o grafo.
 
 Porém, caso você digite alguma origem ou destino incorreto (verificar lista de bairros na planilha do excel), dará de cara com ua tela de erro pedindo pra inserir novamente
 Após isso, você pode tentar novamente para gerar um resultado possível.
-
-
